@@ -1,0 +1,56 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "jonhallur@gmail.com",
+    "longName": "Swim Timer",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/swimming-100.png",
+                "menuIcon": true,
+                "name": "MENU_ICON",
+                "type": "png"
+            },
+            {
+                "file": "images/action_image_end.png",
+                "name": "IMAGE_ACTION_END",
+                "type": "png"
+            },
+            {
+                "file": "images/action_image_stop.png",
+                "name": "IMAGE_ACTION_STOP",
+                "type": "png"
+            },
+            {
+                "file": "images/action_icon_delete.png",
+                "name": "IMAGE_ACTION_DELETE",
+                "type": "png"
+            },
+            {
+                "file": "images/action_icon_menu.png",
+                "name": "IMAGE_ACTION_MENU",
+                "type": "png"
+            },
+            {
+                "file": "images/action_icon_pause.png",
+                "name": "IMAGE_ACTION_PAUSE",
+                "type": "png"
+            },
+            {
+                "file": "images/action_icon_play.png",
+                "name": "IMAGE_ACTION_PLAY",
+                "type": "png"
+            }
+        ]
+    },
+    "shortName": "Swim Timer",
+    "uuid": "0b9ee797-789a-4616-828f-fc08b88d5c4b",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
