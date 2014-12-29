@@ -29,6 +29,10 @@ void timer_lap_end();
 void timer_lap_pause();
 void timer_lap_resume();
 
+//Timer setters
+void timer_set_pool_length();
+void timer_set_swim_type();
+
 bool timer_is_running();
 //Timer getters
 uint16_t timer_get_lap_time();

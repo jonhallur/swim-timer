@@ -1,7 +1,7 @@
 #include <pebble.h>
 #include "swim.h"
 #include "swim_status.h"
-#include "current_status.h"
+#include "swim_overview.h"
 #include "shared_constants.h"
 
 static const char* c_state_text[] = {
@@ -161,7 +161,7 @@ static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
   save_current_status();
-  show_current_status();
+  show_swim_overview();
 }
 
 static void click_config_provider(void *context) {
@@ -201,6 +201,13 @@ static void update_distance_text(uint16_t distance) {
   text_layer_set_text(s_distance_layer, distance_text);
 }
 
+static void initialize_ui_elements() {
+  update_state_text(timer_get_state());
+  update_lap_timer_text(timer_get_lap_time());
+  update_total_timer_text(timer_get_total_time());
+  update_distance_text(timer_get_total_distance());
+}
+
 static void handle_window_unload(Window* window) {
   save_current_status();
   destroy_ui();
@@ -210,13 +217,16 @@ static void handle_window_unload(Window* window) {
 void show_swim(void) {
   initialise_ui();
   initialise_extra();
+  timer_set_pool_length();
   timer_set_callbacks((TimerHandlers) {
     .state = &update_state_text,
     .lap = &update_lap_timer_text,
     .total = &update_total_timer_text,
     .distance = &update_distance_text
   });
+  initialize_ui_elements();
   setup_action_bar();
+  
   window_set_window_handlers(s_window, (WindowHandlers) {
     .unload = handle_window_unload,
   });

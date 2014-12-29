@@ -3,6 +3,7 @@
 #include "swim_overview.h"
 #include "swim.h"
 #include "shared_constants.h"
+#include "swim_status.h"
   
 #define NUM_SWIM_TYPES 4
 #define NUM_POOL_LENGTH 2
@@ -95,7 +96,12 @@ static void menu_draw_row_callback(GContext *ctx, const Layer *cell_layer, MenuI
     case 1:
       switch(cell_index->row) {
         case 0:
-          menu_cell_title_draw(ctx, cell_layer, "Start Workout");
+          if (timer_get_state() == SWIM_TIMER_NOT_STARTED) {
+            menu_cell_title_draw(ctx, cell_layer, "Start Workout");
+          }
+          else {
+            menu_cell_title_draw(ctx, cell_layer, "Resume Workout");
+          }
           break;
         case 1:
           menu_cell_title_draw(ctx, cell_layer, "View Last");
@@ -109,10 +115,12 @@ void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *da
       switch (cell_index->row) {
         case 0:
           pool_length_index = (pool_length_index + 1) % NUM_POOL_LENGTH;
+          persist_write_int(POOL_LENGTH_PKEY, pool_length_index);
           layer_mark_dirty(menu_layer_get_layer(menu_layer));
           break;
         case 1:
           swim_type_index = (swim_type_index + 1) % NUM_SWIM_TYPES;
+          persist_write_int(SWIM_TYPE_PKEY, swim_type_index);
           layer_mark_dirty(menu_layer_get_layer(menu_layer));
           break;
       }

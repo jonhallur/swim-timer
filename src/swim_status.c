@@ -12,6 +12,7 @@ static uint16_t m_current_rest_time;
 static uint16_t m_current_distance;
 static uint16_t m_current_lap_count;
 static uint8_t m_pool_length;
+static uint8_t m_swim_type;
 static TimerHandlers p_callbacks;
 
 void setup_timer() {
@@ -97,6 +98,18 @@ bool timer_is_running() {
   }
   return true;
 }
+
+//Timer setters
+void timer_set_pool_length() {
+  uint8_t pool_length_index = persist_exists(POOL_LENGTH_PKEY) ? persist_read_int(POOL_LENGTH_PKEY) : 0;
+  m_pool_length = pool_length[pool_length_index];
+}
+
+
+void timer_set_swim_type() {
+  m_swim_type = persist_exists(SWIM_TYPE_PKEY) ? persist_read_int(SWIM_TYPE_PKEY) : 0;
+}
+
 //Timer getters
 uint16_t timer_get_lap_time() {
   return m_current_lap_time;
