@@ -43,3 +43,4 @@ uint16_t timer_get_total_swim_time();
 uint16_t timer_get_total_distance();
 uint16_t timer_get_total_laps();
 TimerState timer_get_state();
+uint16_t timer_get_swim_type_distance(int swim_type);

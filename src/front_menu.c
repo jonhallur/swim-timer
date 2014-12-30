@@ -15,8 +15,7 @@ const uint8_t pool_length[] = {25, 50};
 const char *swim_type_name[] = { 
   "Front Crawl", 
   "Back Crawl", 
-  "Breast Stroke", 
-  "Butterfly Stroke" 
+  "Breast Stroke"
 };
 
 static uint8_t pool_length_index;

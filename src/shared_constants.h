@@ -8,7 +8,10 @@
 #define SWIM_STATUS_SWIM_TIME_PKEY 4
 #define SWIM_STATUS_REST_TIME_PKEY 5
 #define SWIM_STATUS_LAP_COUNT_PKEY 6
+#define SWIM_STATUS_FRONT_CRAWL_DISTANCE_PKEY 7
+#define SWIM_STATUS_BACK_CRAWL_DISTANCE_PKEY 8
+#define SWIM_STATUS_BREAST_STROKE_DISTANCE_PKEY 9
 extern const uint8_t pool_length[];
-typedef enum { FRONT_CRAWL, BACK_CRAWL, BREAST_STROKE, BUTTERFLY_STROKE } swim_types;
+typedef enum { FRONT_CRAWL, BACK_CRAWL, BREAST_STROKE } swim_types;
 extern const char *swim_type_name[];
 #endif //_CONSTANTS_H_

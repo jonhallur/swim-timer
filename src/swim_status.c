@@ -13,12 +13,17 @@ static uint16_t m_current_distance;
 static uint16_t m_current_lap_count;
 static uint8_t m_pool_length;
 static uint8_t m_swim_type;
+static uint16_t m_swim_type_distances[3];
 static TimerHandlers p_callbacks;
 
 void setup_timer() {
   m_start_time = time(NULL);
   m_current_state = SWIM_TIMER_SWIMMING;
   uint8_t pool_length_index = persist_exists(POOL_LENGTH_PKEY) ? persist_read_int(POOL_LENGTH_PKEY) : 0;
+  m_swim_type = persist_exists(SWIM_TYPE_PKEY) ? persist_read_int(SWIM_TYPE_PKEY) : 0;
+  m_swim_type_distances[FRONT_CRAWL] = 0;
+  m_swim_type_distances[BACK_CRAWL] = 0;
+  m_swim_type_distances[BREAST_STROKE] = 0;
   m_pool_length = pool_length[pool_length_index];
   p_callbacks.state(m_current_state);
   p_callbacks.lap(0);
@@ -78,6 +83,7 @@ void timer_lap_end() {
   m_current_rest_time = 0;
   m_current_lap_count++;
   m_current_distance += m_pool_length;
+  m_swim_type_distances[m_swim_type] += m_pool_length;
   p_callbacks.state(m_current_state);
   p_callbacks.distance(m_current_distance);
 }
@@ -140,4 +146,11 @@ uint16_t timer_get_total_laps() {
 
 TimerState timer_get_state() {
   return m_current_state;
+}
+
+uint16_t timer_get_swim_type_distance(int swim_type) {
+  if (swim_type < 0 || swim_type > 2) {
+    return 0;
+  }
+  return m_swim_type_distances[swim_type];
 }

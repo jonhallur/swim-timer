@@ -96,6 +96,10 @@ static void save_current_status(void) {
   persist_write_int(SWIM_STATUS_SWIM_TIME_PKEY, (int)timer_get_total_swim_time());
   persist_write_int(SWIM_STATUS_DISTANCE_PKEY, (int)timer_get_total_distance());
   persist_write_int(SWIM_STATUS_LAP_COUNT_PKEY, (int)timer_get_total_laps());
+  persist_write_int(SWIM_STATUS_FRONT_CRAWL_DISTANCE_PKEY, (int)timer_get_swim_type_distance(FRONT_CRAWL));
+  persist_write_int(SWIM_STATUS_BACK_CRAWL_DISTANCE_PKEY, (int)timer_get_swim_type_distance(BACK_CRAWL));
+  persist_write_int(SWIM_STATUS_BREAST_STROKE_DISTANCE_PKEY, (int)timer_get_swim_type_distance(BREAST_STROKE));
+  
 }
 
 static void initialise_extra(void) {
@@ -218,6 +222,7 @@ void show_swim(void) {
   initialise_ui();
   initialise_extra();
   timer_set_pool_length();
+  timer_set_swim_type();
   timer_set_callbacks((TimerHandlers) {
     .state = &update_state_text,
     .lap = &update_lap_timer_text,

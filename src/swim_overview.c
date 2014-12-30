@@ -13,10 +13,13 @@ static char swim_time_text[10];
 static char distance_text[10];
 static char average_text[10];
 static char lap_count_text[10];
+static char front_crawl_distance_text[10];
+static char back_crawl_distance_text[10];
+static char breast_stroke_distance_text[10];
 
-static char* label_1[2] = {"Total time", "Average lap time"};
-static char* label_2[2] = {"Swim time", "Distance"};
-static char* label_3[2] = {"Rest time", "Lap count"};
+static char* label_1[3] = {"Total time", "Average lap time", "Front Crawl"};
+static char* label_2[3] = {"Swim time", "Total Distance", "Back Crawl"};
+static char* label_3[3] = {"Rest time", "Lap count", "Breast Strokes"};
   
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;
@@ -115,6 +118,11 @@ static void set_text_elements(int index) {
     text_layer_set_text(s_text_layer_2, distance_text);
     text_layer_set_text(s_text_layer_3, lap_count_text);
   }
+  else if (index == 2) {
+    text_layer_set_text(s_text_layer_1, front_crawl_distance_text);
+    text_layer_set_text(s_text_layer_2, back_crawl_distance_text);
+    text_layer_set_text(s_text_layer_3, breast_stroke_distance_text);
+  }
 }
 
 static void initialise_text_elements(void) {
@@ -123,6 +131,9 @@ static void initialise_text_elements(void) {
   int swim_time = persist_read_int(SWIM_STATUS_SWIM_TIME_PKEY);
   int distance = persist_read_int(SWIM_STATUS_DISTANCE_PKEY);
   int lap_count = persist_read_int(SWIM_STATUS_LAP_COUNT_PKEY);
+  int front_dist = persist_read_int(SWIM_STATUS_FRONT_CRAWL_DISTANCE_PKEY);
+  int back_dist = persist_read_int(SWIM_STATUS_BACK_CRAWL_DISTANCE_PKEY);
+  int breast_dist  = persist_read_int(SWIM_STATUS_BREAST_STROKE_DISTANCE_PKEY);
   
   format_time(total_time_text, total_time);
   format_time(rest_time_text, rest_time);
@@ -130,12 +141,15 @@ static void initialise_text_elements(void) {
   format_time(average_text, (swim_time / lap_count));
   snprintf(distance_text, sizeof(distance_text), "%dm", distance);
   snprintf(lap_count_text, sizeof(lap_count_text), "%d", lap_count);
-  
+  snprintf(front_crawl_distance_text, sizeof(front_crawl_distance_text), "%dm", front_dist);
+  snprintf(back_crawl_distance_text, sizeof(back_crawl_distance_text), "%dm", back_dist);
+  snprintf(breast_stroke_distance_text, sizeof(breast_stroke_distance_text), "%dm", breast_dist);
+
   set_text_elements(page_index);
 }
 
 static void page_click_handler(ClickRecognizerRef recognizer, void *context) {
-  page_index = (page_index + 1) % 2;
+  page_index = (page_index + 1) % 3;
   set_text_elements(page_index);
 }
 
